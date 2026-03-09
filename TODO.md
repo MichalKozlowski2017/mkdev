@@ -13,24 +13,24 @@
 - [x] Dodać podstawową typografię i spacing (Tailwind + ewentualnie `@tailwindcss/typography`).
 
 ### 3. Strona główna (landing)
-- [ ] Sekcja hero: krótki opis kim jesteś, czym się zajmujesz, CTA do kontaktu / portfolio.
-- [ ] Sekcja "O mnie" z naciskiem na doświadczenie jako developer.
-- [ ] Sekcja "Tech stack" (ikony / lista technologii).
-- [ ] Sekcja "Wybrane projekty" z odnośnikami do pełnej listy projektów.
+- [x] Sekcja hero: krótki opis kim jesteś, czym się zajmujesz, CTA do kontaktu / portfolio.
+- [x] Sekcja "O mnie" z naciskiem na doświadczenie jako developer.
+- [x] Sekcja "Tech stack" (ikony / lista technologii).
+- [x] Sekcja "Wybrane projekty" z odnośnikami do pełnej listy projektów.
 
 ### 4. Podstrona projektów (web)
-- [ ] Zaprojektować model danych projektu (nazwa, opis, link, stack, typ: web/mobile/inna).
-- [ ] Dodać stronę listy projektów (np. `/projects`) z filtrowaniem po typie / technologii (opcjonalnie na później).
-- [ ] Dodać strony szczegółów projektu (np. `/projects/[slug]`) – opcjonalnie, jeśli będzie potrzeba szerszego opisu.
+- [x] Zaprojektować model danych projektu (nazwa, opis, link, stack, typ: web/mobile/inna).
+- [x] Dodać stronę listy projektów (np. `/projects`) z filtrowaniem po typie / technologii (opcjonalnie na później).
+- [x] Dodać strony szczegółów projektu (np. `/projects/[slug]`) – opcjonalnie, jeśli będzie potrzeba szerszego opisu.
 
 ### 5. Aplikacje mobilne i podstrony prawne
-- [ ] Zaplanować strukturę URL dla aplikacji mobilnych, np.:
-  - [ ] `/apps` – lista aplikacji mobilnych,
-  - [ ] `/apps/[slug]` – opis aplikacji,
-  - [ ] `/apps/[slug]/privacy-policy` – privacy policy,
+- [x] Zaplanować strukturę URL dla aplikacji mobilnych, np.:
+  - [x] `/apps` – lista aplikacji mobilnych,
+  - [x] `/apps/[slug]` – opis aplikacji,
+  - [x] `/apps/[slug]/privacy-policy` – privacy policy,
   - [ ] `/apps/[slug]/terms` – (opcjonalnie) terms & conditions.
-- [ ] Wybrać sposób trzymania treści (na start statyczne pliki/obiekty w repo – np. `data/apps.ts` lub MDX).
-- [ ] Zaimplementować generowanie statyczne (SSG) dla stron polityk prywatności i regulaminów.
+- [x] Wybrać sposób trzymania treści (na start statyczne pliki/obiekty w repo – np. `data/apps.ts` lub MDX).
+- [x] Zaimplementować generowanie statyczne (SSG) dla stron polityk prywatności i regulaminów.
 
 ### 6. Kontakt i sekcja usług
 - [ ] Dodać stronę / sekcję "Usługi" z jasnym opisem, co oferujesz.
