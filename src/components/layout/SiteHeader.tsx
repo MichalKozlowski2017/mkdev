@@ -3,7 +3,6 @@ import Link from "next/link";
 const NAV_ITEMS = [
   { href: "/", label: "Start" },
   { href: "/projects", label: "Projekty" },
-  { href: "/apps", label: "Aplikacje mobilne" },
   { href: "/contact", label: "Kontakt" },
 ];
 
@@ -12,12 +11,7 @@ export function SiteHeader() {
     <header className="border-b border-zinc-200/80 bg-white/80 backdrop-blur dark:border-zinc-800 dark:bg-black/60">
       <div className="mx-auto flex h-16 max-w-5xl items-center justify-between px-4 sm:px-6 lg:px-8">
         <Link href="/" className="flex items-center gap-2">
-          <span className="font-mono text-xs uppercase tracking-[0.2em] text-zinc-500">
-            mkdev
-          </span>
-          <span className="text-sm font-semibold tracking-tight text-zinc-950 dark:text-zinc-50">
-            Michał – Developer
-          </span>
+          <span className="font-mono text-xs uppercase tracking-[0.2em] text-zinc-500">mkdev</span>
         </Link>
         <nav className="flex items-center gap-3 text-sm text-zinc-600 dark:text-zinc-400">
           {NAV_ITEMS.map((item) => (
@@ -34,4 +28,3 @@ export function SiteHeader() {
     </header>
   );
 }
-

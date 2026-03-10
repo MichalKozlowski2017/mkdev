@@ -27,12 +27,26 @@ export default function ProjectsPage() {
             href={`/projects/${project.slug}`}
             className="group block rounded-2xl border border-zinc-200 bg-white/70 p-4 text-left shadow-sm ring-1 ring-black/2 transition hover:-translate-y-0.5 hover:border-zinc-300 hover:shadow-md dark:border-zinc-800 dark:bg-zinc-950/60 dark:ring-white/3 dark:hover:border-zinc-600"
           >
-            <h2 className="text-sm font-semibold text-zinc-900 dark:text-zinc-50">
-              {project.name}
-            </h2>
-            <p className="mt-1 text-[11px] uppercase tracking-[0.16em] text-zinc-500">
-              {typeLabel[project.type] ?? "Projekt"}
-            </p>
+            <div className="flex items-start gap-3">
+              {project.logoSrc && (
+                <div className="mt-0.5 flex h-10 w-10 items-center justify-center rounded-xl bg-zinc-100 ring-1 ring-black/5 dark:bg-zinc-900 dark:ring-white/5">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={project.logoSrc}
+                    alt={`${project.name} logo`}
+                    className="max-h-6 max-w-full"
+                  />
+                </div>
+              )}
+              <div>
+                <h2 className="text-sm font-semibold text-zinc-900 dark:text-zinc-50">
+                  {project.name}
+                </h2>
+                <p className="mt-1 text-[11px] uppercase tracking-[0.16em] text-zinc-500">
+                  {typeLabel[project.type] ?? "Projekt"}
+                </p>
+              </div>
+            </div>
             <p className="mt-3 line-clamp-3 text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">
               {project.shortDescription}
             </p>
