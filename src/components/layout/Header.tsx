@@ -6,7 +6,7 @@ const NAV_ITEMS = [
   { href: "/contact", label: "Kontakt" },
 ];
 
-export function SiteHeader() {
+export function Header() {
   return (
     <header className="border-b border-zinc-200/80 bg-white/80 backdrop-blur dark:border-zinc-800 dark:bg-black/60">
       <div className="mx-auto flex h-16 max-w-5xl items-center justify-between px-4 sm:px-6 lg:px-8">
