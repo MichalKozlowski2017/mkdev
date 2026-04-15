@@ -1,0 +1,35 @@
+---
+description: Konwencje startera WWW (treść, adaptery, Next.js)
+alwaysApply: true
+---
+
+# Starter site — konwencje
+
+## Źródło treści
+
+- Nie czytaj treści marketingowej wprost z JSX poza mapowaniem z `getPageBySlug` / `listPosts` itd.
+- Nowe źródło danych = nowy adapter w `src/lib/content/adapters/` + rozgałęzienie w `pages.ts` / `posts.ts` albo jeden plik fabryki. Wyjście adaptera **musi** przejść walidację Zod z `contract.ts`.
+- `CONTENT_SOURCE`: `files` | `supabase` | `sanity`. Domyślnie zakładaj `files`, dopóki projekt nie wymaga innego trybu.
+
+## UI
+
+- Strona publiczna: grupa `src/app/(site)/`. Panel: `src/app/admin/` (rozwój tylko przy Supabase lub innym backendzie).
+- Bloki strony: rozszerzaj `contentBlockSchema` w `contract.ts`, potem `PageBlocks` i ewentualnie mapowanie w adapterach.
+
+## MDX
+
+- Treść wpisów i sekcje `prose` używają `next-mdx-remote/rsc`. Wspólne komponenty MDX: `src/components/mdx/mdx-components.tsx`.
+
+## Supabase
+
+- Schemat startowy: `docs/supabase-schema.sql`. Polityki RLS i multi-tenant (`tenant_id`, członkostwa) dodawaj per projekt — dokumentuj w migracjach.
+- Klucz `SUPABASE_SERVICE_ROLE_KEY` tylko po stronie serwera; nie eksponuj w kliencie.
+
+## Sanity
+
+- Typy dokumentów i pola opisane w `docs/sanity-studio.md`. Po publikacji konfiguruj webhook na `POST /api/revalidate`.
+
+## Zmiany w repozytorium
+
+- Minimalny diff: nie refaktoruj całego projektu przy pojedynczej funkcji.
+- Nie usuwaj kontraktu treści bez migracji treści klienta.
