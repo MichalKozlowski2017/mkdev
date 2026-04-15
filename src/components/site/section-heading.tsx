@@ -19,7 +19,7 @@ export function SectionHeading({
           {eyebrow}
         </p>
       ) : null}
-      <h2 className="text-2xl font-semibold tracking-tight text-zinc-950 sm:text-3xl dark:text-zinc-50">
+      <h2 className="text-pretty text-4xl font-semibold tracking-tight text-zinc-950 sm:text-5xl sm:leading-[1.08] dark:text-zinc-50">
         {title}
       </h2>
       {description ? <p className={`text-base leading-relaxed ${descriptionClassName}`}>{description}</p> : null}

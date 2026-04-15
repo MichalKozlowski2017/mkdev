@@ -18,7 +18,7 @@ export const metadata: Metadata = {
     template: "%s · mkdev",
   },
   description:
-    "Deweloper aplikacji mobilnych na Androida i iOS — produkty w Google Play i App Store, dokumentacja dla użytkowników i sklepów.",
+    "Mobile app developer for Android and iOS — products on Google Play and App Store, with public user documentation.",
 };
 
 export default function RootLayout({
@@ -28,7 +28,7 @@ export default function RootLayout({
 }>) {
   return (
     <html
-      lang="pl"
+      lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col">{children}</body>

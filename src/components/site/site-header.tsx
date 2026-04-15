@@ -14,7 +14,7 @@ const navItemClass =
   "rounded-lg px-3 py-2 text-sm font-medium text-zinc-600 outline-none transition-colors duration-200 hover:bg-zinc-900/[0.05] hover:text-zinc-950 focus-visible:ring-2 focus-visible:ring-violet-500/40 dark:text-zinc-300 dark:hover:bg-white/[0.06] dark:hover:text-white dark:focus-visible:ring-violet-400/35";
 
 type SiteHeaderProps = {
-  /** `CONTENT_SOURCE` — link Admin tylko przy Supabase. */
+  /** `CONTENT_SOURCE` — show Admin link only for Supabase mode. */
   source: string;
 };
 
@@ -33,10 +33,10 @@ export function SiteHeader({ source }: SiteHeaderProps) {
 
         <nav
           className="flex flex-wrap items-center gap-1 sm:justify-end"
-          aria-label="Główna nawigacja"
+          aria-label="Main navigation"
         >
           <Link href="/about" className={navItemClass}>
-            O mnie
+            About
           </Link>
           {source === "supabase" ? (
             <Link href="/admin" className={navItemClass}>

@@ -22,7 +22,7 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const app = await getAppBySlug(slug);
-  if (!app) return { title: "Nie znaleziono" };
+  if (!app) return { title: "Not found" };
   return {
     title: app.title,
     description: app.tagline,
@@ -41,7 +41,7 @@ export default async function AppDetailPage({ params }: Props) {
           href="/"
           className="inline-flex items-center gap-1 text-sm font-medium text-zinc-500 transition hover:text-violet-600 dark:text-zinc-400 dark:hover:text-violet-400"
         >
-          <span aria-hidden>←</span> Strona główna
+          <span aria-hidden>←</span> Home
         </Link>
       </nav>
 
@@ -56,14 +56,14 @@ export default async function AppDetailPage({ params }: Props) {
               <div className="h-14 w-14 shrink-0 overflow-hidden rounded-2xl ring-1 ring-inset ring-zinc-200/80 dark:ring-white/10">
                 <Image
                   src={app.iconSrc}
-                  alt={`Ikona ${app.title}`}
+                  alt={`${app.title} icon`}
                   width={56}
                   height={56}
                   className="h-full w-full object-cover"
                 />
               </div>
             ) : null}
-            <h1 className="text-pretty text-3xl font-semibold tracking-tight sm:text-4xl">
+            <h1 className="text-pretty text-4xl font-semibold tracking-tight sm:text-5xl sm:leading-[1.08]">
               <span className="bg-gradient-to-r from-zinc-900 to-zinc-600 bg-clip-text text-transparent dark:from-white dark:to-zinc-300">
                 {app.title}
               </span>
@@ -81,7 +81,7 @@ export default async function AppDetailPage({ params }: Props) {
                 href={`/apps/${app.slug}/privacy-policy`}
                 className="font-semibold text-violet-600 underline decoration-violet-500/30 underline-offset-4 transition hover:decoration-violet-500/60 dark:text-violet-400"
               >
-                Polityka prywatności
+                Privacy policy
               </Link>
             </p>
           ) : null}
@@ -96,7 +96,7 @@ export default async function AppDetailPage({ params }: Props) {
       {app.galleryImages.length > 0 ? (
         <section className="space-y-4">
           <h2 className="text-xl font-semibold tracking-tight text-zinc-900 dark:text-zinc-100">
-            Zrzuty ekranu
+            Screenshots
           </h2>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {app.galleryImages.map((src, index) => (
@@ -109,7 +109,7 @@ export default async function AppDetailPage({ params }: Props) {
               >
                 <Image
                   src={src}
-                  alt={`${app.title} — zrzut ekranu ${index + 1}`}
+                  alt={`${app.title} screenshot ${index + 1}`}
                   width={900}
                   height={1950}
                   className="h-full w-full object-cover transition duration-300 group-hover:scale-[1.02]"

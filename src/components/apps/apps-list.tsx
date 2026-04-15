@@ -8,7 +8,7 @@ function AppTileIcon({ title, iconSrc }: { title: string; iconSrc?: string }) {
       <div className="h-12 w-12 shrink-0 overflow-hidden rounded-2xl ring-1 ring-inset ring-zinc-200/80 dark:ring-white/10">
         <Image
           src={iconSrc}
-          alt={`Ikona ${title}`}
+          alt={`${title} icon`}
           width={48}
           height={48}
           className="h-full w-full object-cover"
@@ -40,7 +40,8 @@ export function AppsList({ apps }: { apps: MobileApp[] }) {
   if (apps.length === 0) {
     return (
       <p className="text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">
-        Obecnie trwa przygotowanie pierwszej publikacji. Lista produktów w sklepach mobilnych oraz powiązane dokumenty zostaną tu udostępnione wraz z uruchomieniem aplikacji.
+        The first app is currently being prepared for release. Store links and related
+        documents will appear here once it goes live.
       </p>
     );
   }
@@ -64,7 +65,7 @@ export function AppsList({ apps }: { apps: MobileApp[] }) {
                 </span>
               ) : null}
               <span className="mt-3 inline-flex items-center gap-1 text-xs font-medium text-violet-600 opacity-0 transition group-hover:opacity-100 dark:text-violet-400">
-                Szczegóły
+                Details
                 <span aria-hidden className="translate-x-0 transition group-hover:translate-x-0.5">
                   →
                 </span>

@@ -17,11 +17,11 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const app = await getAppBySlug(slug);
-  if (!app?.privacyPolicySlug) return { title: "Nie znaleziono" };
+  if (!app?.privacyPolicySlug) return { title: "Not found" };
   const policyPage = await getPageBySlug(app.privacyPolicySlug);
   return {
-    title: policyPage?.title ?? `Polityka prywatności — ${app.title}`,
-    description: policyPage?.description ?? `Polityka prywatności aplikacji ${app.title}.`,
+    title: policyPage?.title ?? `Privacy Policy — ${app.title}`,
+    description: policyPage?.description ?? `${app.title} app privacy policy.`,
   };
 }
 
@@ -40,7 +40,7 @@ export default async function AppPrivacyPolicyPage({ params }: Props) {
           href="/"
           className="inline-flex items-center gap-1 font-medium text-zinc-500 transition hover:text-violet-600 dark:text-zinc-400 dark:hover:text-violet-400"
         >
-          <span aria-hidden>←</span> Strona główna
+          <span aria-hidden>←</span> Home
         </Link>
         <span className="text-zinc-400 dark:text-zinc-600">/</span>
         <Link

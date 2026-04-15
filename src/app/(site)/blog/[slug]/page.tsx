@@ -30,7 +30,9 @@ export default async function BlogPostPage({ params }: Props) {
   return (
     <article className="space-y-8">
       <header className="space-y-2 border-b border-zinc-200 pb-8 dark:border-zinc-800">
-        <h1 className="text-4xl font-semibold tracking-tight">{post.title}</h1>
+        <h1 className="text-4xl font-semibold tracking-tight sm:text-5xl sm:leading-[1.08]">
+          {post.title}
+        </h1>
         <time className="text-sm text-zinc-500" dateTime={post.publishedAt}>
           {post.publishedAt}
         </time>
