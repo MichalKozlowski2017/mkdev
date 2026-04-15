@@ -37,10 +37,10 @@ export default async function AppPrivacyPolicyPage({ params }: Props) {
     <article className="space-y-10">
       <nav className="flex flex-wrap items-center gap-3 text-sm">
         <Link
-          href="/apps"
+          href="/"
           className="inline-flex items-center gap-1 font-medium text-zinc-500 transition hover:text-violet-600 dark:text-zinc-400 dark:hover:text-violet-400"
         >
-          <span aria-hidden>←</span> Aplikacje
+          <span aria-hidden>←</span> Strona główna
         </Link>
         <span className="text-zinc-400 dark:text-zinc-600">/</span>
         <Link

@@ -35,9 +35,6 @@ export function SiteHeader({ source }: SiteHeaderProps) {
           className="flex flex-wrap items-center gap-1 sm:justify-end"
           aria-label="Główna nawigacja"
         >
-          <Link href="/apps" className={navItemClass}>
-            Aplikacje
-          </Link>
           <Link href="/about" className={navItemClass}>
             O mnie
           </Link>
