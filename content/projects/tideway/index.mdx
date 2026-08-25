@@ -1,0 +1,39 @@
+---
+slug: tideway
+title: Tideway
+tagline: AI-powered trend digest — daily summaries from tech, IT, games, sport, and finance.
+platform: web
+status: live
+sortOrder: 2
+year: 2026
+liveUrl: https://tideway.pl/
+repoUrl: https://github.com/MichalKozlowski2017/tideway
+tech:
+  - Next.js 16
+  - Neon
+  - OpenAI
+  - TypeScript
+  - Tailwind CSS
+  - Zod
+---
+
+**Tideway** is an automated news digest: it pulls public sources (RSS, Hacker News, and
+more), writes short AI summaries, and publishes them as readable articles — so you get
+“what’s hot today” without scrolling hundreds of links.
+
+## Product
+
+- **Categories:** Tech, IT, Games, AI, Sport, Finance — each with its own feed.
+- **Article pages** with category/type labels, tags, reading time, and share actions.
+- **Daily & weekly digests** that roll trends across all categories into one view.
+- Clear labeling when content is **AI-generated** from public sources, with a path back
+  to the originals.
+
+## Engineering
+
+- **Next.js 16** App Router with ISR-friendly publishing.
+- **Neon Postgres** for articles, tags, and category data.
+- **OpenAI** (or local Ollama) for summarization pipelines.
+- Ingest via **RSS** and scheduled jobs; structured validation with **Zod**.
+
+Built as a full content product end-to-end: ingestion → generation → publishing → reading UX.
