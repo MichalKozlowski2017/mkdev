@@ -1,0 +1,42 @@
+---
+slug: mkshots
+title: MK Shots
+tagline: Personal photography portfolio with EXIF metadata, gallery filters, and shot statistics.
+platform: web
+status: live
+sortOrder: 3
+year: 2026
+liveUrl: https://www.mkshots.pl/
+repoUrl: https://github.com/MichalKozlowski2017/mk-photography-portfolio
+tech:
+  - Next.js 16
+  - Prisma
+  - Cloudinary
+  - NextAuth
+  - exifr
+  - TypeScript
+  - Tailwind CSS
+---
+
+**MK Shots** is a photography portfolio built around the photos themselves — not just a
+pretty gallery, but a system for uploading, organizing, and inspecting every frame.
+
+## Product
+
+- Immersive **home** hero and a dark, distraction-free reading of the work.
+- **Gallery** with category filters (architecture, street, portrait, macro, …) and
+  flexible sorting (date, recently added, rating).
+- **Per-photo pages** with automatic **EXIF** readout: camera, lens, focal length,
+  aperture, shutter, ISO.
+- **Stats** dashboard — totals, categories, activity timeline, and camera filters.
+- Light/dark theme and language toggle for a polished visitor experience.
+
+## Engineering
+
+- **Next.js 16** App Router for the public site.
+- **Prisma** + Postgres for photos, categories, ratings, and comments.
+- **Cloudinary** for media delivery; **exifr** extracts metadata on upload.
+- **NextAuth**-backed admin flow for managing the archive.
+
+A full-stack portfolio product: CMS-like admin + public gallery + photography-aware
+metadata and analytics.
