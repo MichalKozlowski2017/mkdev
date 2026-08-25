@@ -40,6 +40,8 @@ export default async function ProjectDetailPage({ params }: Props) {
   const project = await getProjectBySlug(slug);
   if (!project) notFound();
 
+  const isMobile = project.platform === "mobile";
+
   return (
     <article className="space-y-12">
       <nav>
@@ -89,21 +91,33 @@ export default async function ProjectDetailPage({ params }: Props) {
           <h2 className="text-xl font-semibold tracking-tight text-zinc-900 dark:text-zinc-100">
             Screenshots
           </h2>
-          <div className="grid gap-4">
+          <div
+            className={
+              isMobile
+                ? "grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4"
+                : "grid gap-4"
+            }
+          >
             {project.galleryImages.map((src, index) => (
               <a
                 key={src}
                 href={src}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group block overflow-hidden rounded-2xl border border-zinc-200/90 bg-white/70 shadow-sm transition hover:border-violet-400/45 hover:shadow-md dark:border-zinc-800 dark:bg-zinc-950/55"
+                className={`group relative block overflow-hidden rounded-2xl border border-zinc-200/90 bg-zinc-50 shadow-sm transition hover:border-violet-400/45 hover:shadow-md dark:border-zinc-800 dark:bg-zinc-900 ${
+                  isMobile ? "aspect-[9/19]" : "aspect-[16/10]"
+                }`}
               >
                 <Image
                   src={src}
                   alt={`${project.title} screenshot ${index + 1}`}
-                  width={1600}
-                  height={1000}
-                  className="h-full w-full object-cover transition duration-300 group-hover:scale-[1.01]"
+                  fill
+                  sizes={
+                    isMobile
+                      ? "(min-width: 1024px) 25vw, (min-width: 640px) 33vw, 50vw"
+                      : "(min-width: 768px) 720px, 100vw"
+                  }
+                  className="object-contain transition duration-300 group-hover:scale-[1.02]"
                 />
               </a>
             ))}
