@@ -1,0 +1,33 @@
+---
+slug: routinering
+title: RoutineRing
+tagline: Cyclic home reminders with progress rings, home screen widgets, and cloud sync.
+platform: mobile
+status: live
+sortOrder: 3
+year: 2026
+repoUrl: https://github.com/MichalKozlowski2017/routinering
+tech:
+  - Flutter
+  - Dart
+  - Drift
+  - Supabase
+  - Riverpod
+---
+
+RoutineRing helps with recurring household tasks using progress rings, local
+notifications, home screen widgets, and optional cloud sync.
+
+## Features
+
+- **Progress rings** — green / yellow / red rings with an icon inside, per task.
+- **Task management** — add, edit, complete, delete, reorder, plus presets,
+  categories, and completion history.
+- **Local notifications** — 24h, 3h, and 10% reminder rules.
+- **Home screen widgets** on both iOS and Android.
+- **Accounts & sync** — Google and Apple sign-in via Supabase, with cloud task sync
+  and a conflict dialog when local and cloud data diverge.
+- **Backups** — JSON export / import.
+
+Local-first architecture uses Drift (SQLite); state is managed with Riverpod and
+GoRouter on Material 3.

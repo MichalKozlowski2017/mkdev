@@ -71,3 +71,28 @@ export const mobileAppSchema = mobileAppFrontmatterSchema.extend({
 });
 
 export type MobileApp = z.infer<typeof mobileAppSchema>;
+
+export const projectPlatformSchema = z.enum(["web", "mobile", "desktop", "tool"]);
+export const projectStatusSchema = z.enum(["live", "in-progress", "archived"]);
+
+export const projectFrontmatterSchema = z.object({
+  slug: z.string(),
+  title: z.string(),
+  tagline: z.string().optional(),
+  platform: projectPlatformSchema,
+  status: projectStatusSchema.optional(),
+  /** Niższa wartość = wyżej na liście. Bez pola — na końcu alfabetycznie. */
+  sortOrder: z.coerce.number().optional(),
+  year: z.coerce.string().optional(),
+  liveUrl: z.string().url().optional(),
+  repoUrl: z.string().url().optional(),
+  tech: z.array(z.string()).default([]),
+});
+
+export const projectSchema = projectFrontmatterSchema.extend({
+  bodyMdx: z.string(),
+});
+
+export type ProjectPlatform = z.infer<typeof projectPlatformSchema>;
+export type ProjectStatus = z.infer<typeof projectStatusSchema>;
+export type Project = z.infer<typeof projectSchema>;

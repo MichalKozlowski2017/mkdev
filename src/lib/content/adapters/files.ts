@@ -8,14 +8,18 @@ import {
   mobileAppSchema,
   pageFrontmatterSchema,
   pageSchema,
+  projectFrontmatterSchema,
+  projectSchema,
   type BlogPost,
   type MobileApp,
   type Page,
+  type Project,
 } from "../contract";
 
 const PAGES_DIR = path.join(process.cwd(), "content", "pages");
 const POSTS_DIR = path.join(process.cwd(), "content", "posts");
 const APPS_DIR = path.join(process.cwd(), "content", "apps");
+const PROJECTS_DIR = path.join(process.cwd(), "content", "projects");
 const APP_SCREEN_EXT = /\.(png|jpe?g|webp)$/i;
 
 async function readMdxFile(filePath: string) {
@@ -245,6 +249,58 @@ export async function listAppsFromFiles(): Promise<MobileApp[]> {
     if (app) apps.push(app);
   }
   return apps.sort((a, b) => {
+    const ao = a.sortOrder ?? 9999;
+    const bo = b.sortOrder ?? 9999;
+    if (ao !== bo) return ao - bo;
+    return a.title.localeCompare(b.title);
+  });
+}
+
+export async function listProjectSlugsFromFiles(): Promise<string[]> {
+  try {
+    const entries = await fs.readdir(PROJECTS_DIR);
+    return entries
+      .filter((f) => f.endsWith(".mdx") || f.endsWith(".md"))
+      .map((f) => f.replace(/\.mdx?$/, ""));
+  } catch {
+    return [];
+  }
+}
+
+export async function getProjectFromFiles(slug: string): Promise<Project | null> {
+  const base = path.join(PROJECTS_DIR, slug);
+  let filePath = `${base}.mdx`;
+  try {
+    await fs.access(filePath);
+  } catch {
+    filePath = `${base}.md`;
+    try {
+      await fs.access(filePath);
+    } catch {
+      return null;
+    }
+  }
+
+  const { data, content } = await readMdxFile(filePath);
+  const fm = projectFrontmatterSchema.safeParse(data);
+  if (!fm.success) return null;
+  if (fm.data.slug !== slug) return null;
+
+  const parsed = projectSchema.safeParse({
+    ...fm.data,
+    bodyMdx: content.trim(),
+  });
+  return parsed.success ? parsed.data : null;
+}
+
+export async function listProjectsFromFiles(): Promise<Project[]> {
+  const slugs = await listProjectSlugsFromFiles();
+  const projects: Project[] = [];
+  for (const s of slugs) {
+    const project = await getProjectFromFiles(s);
+    if (project) projects.push(project);
+  }
+  return projects.sort((a, b) => {
     const ao = a.sortOrder ?? 9999;
     const bo = b.sortOrder ?? 9999;
     if (ao !== bo) return ao - bo;
