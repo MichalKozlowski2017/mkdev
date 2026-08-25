@@ -35,8 +35,8 @@ export function SiteHeader({ source }: SiteHeaderProps) {
           className="flex flex-wrap items-center gap-1 sm:justify-end"
           aria-label="Main navigation"
         >
-          <Link href="/projects" className={navItemClass}>
-            Projects
+          <Link href="/apps" className={navItemClass}>
+            Apps
           </Link>
           <Link href="/about" className={navItemClass}>
             About

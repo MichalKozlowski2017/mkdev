@@ -46,7 +46,7 @@ export default async function ProjectDetailPage({ params }: Props) {
     <article className="space-y-12">
       <nav>
         <Link
-          href="/projects"
+          href="/"
           className="inline-flex items-center gap-1 text-sm font-medium text-zinc-500 transition hover:text-violet-600 dark:text-zinc-400 dark:hover:text-violet-400"
         >
           <span aria-hidden>←</span> Projects

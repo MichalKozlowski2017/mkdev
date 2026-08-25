@@ -1,25 +1,23 @@
 import type { Metadata } from "next";
-import { listApps } from "@/lib/content";
-import { AppsList } from "@/components/apps/apps-list";
+import { listProjects } from "@/lib/content";
+import { ProjectsList } from "@/components/projects/projects-list";
 import { SectionHeading } from "@/components/site/section-heading";
 
 export const metadata: Metadata = {
   title: "mkdev",
-  description: "Simple mobile developer website with app pages and docs.",
+  description: "Selected web, mobile, and desktop projects built by mkdev.",
 };
 
 export default async function HomePage() {
-  const apps = await listApps();
+  const projects = await listProjects();
 
   return (
     <section className="space-y-8">
-      <div className="flex flex-col gap-6 sm:flex-row sm:items-end sm:justify-between">
-        <SectionHeading
-          title="Apps"
-          description="Mobile app list with store links and privacy pages."
-        />
-      </div>
-      <AppsList apps={apps} />
+      <SectionHeading
+        title="Projects"
+        description="Selected web, mobile, and desktop work — with live demos and source code."
+      />
+      <ProjectsList projects={projects} />
     </section>
   );
 }
