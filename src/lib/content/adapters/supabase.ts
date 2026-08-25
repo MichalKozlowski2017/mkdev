@@ -5,6 +5,7 @@ import {
   type BlogPost,
   type MobileApp,
   type Page,
+  type Project,
 } from "../contract";
 
 function getSupabase() {
@@ -121,5 +122,19 @@ export async function listAppsFromSupabase(): Promise<MobileApp[]> {
 }
 
 export async function listAppSlugsFromSupabase(): Promise<string[]> {
+  return [];
+}
+
+/** Projekty portfolio — rozszerz schemat i UI, gdy zechcesz trzymać je w bazie. */
+export async function getProjectFromSupabase(slug: string): Promise<Project | null> {
+  void slug;
+  return null;
+}
+
+export async function listProjectsFromSupabase(): Promise<Project[]> {
+  return [];
+}
+
+export async function listProjectSlugsFromSupabase(): Promise<string[]> {
   return [];
 }

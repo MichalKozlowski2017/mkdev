@@ -5,6 +5,7 @@ import {
   type BlogPost,
   type MobileApp,
   type Page,
+  type Project,
 } from "../contract";
 
 function getSanity(): SanityClient {
@@ -125,5 +126,19 @@ export async function listAppsFromSanity(): Promise<MobileApp[]> {
 }
 
 export async function listAppSlugsFromSanity(): Promise<string[]> {
+  return [];
+}
+
+/** Projekty portfolio — dodaj typ dokumentu w Sanity, gdy będzie potrzebny CMS. */
+export async function getProjectFromSanity(slug: string): Promise<Project | null> {
+  void slug;
+  return null;
+}
+
+export async function listProjectsFromSanity(): Promise<Project[]> {
+  return [];
+}
+
+export async function listProjectSlugsFromSanity(): Promise<string[]> {
   return [];
 }

@@ -8,14 +8,18 @@ import {
   mobileAppSchema,
   pageFrontmatterSchema,
   pageSchema,
+  projectFrontmatterSchema,
+  projectSchema,
   type BlogPost,
   type MobileApp,
   type Page,
+  type Project,
 } from "../contract";
 
 const PAGES_DIR = path.join(process.cwd(), "content", "pages");
 const POSTS_DIR = path.join(process.cwd(), "content", "posts");
 const APPS_DIR = path.join(process.cwd(), "content", "apps");
+const PROJECTS_DIR = path.join(process.cwd(), "content", "projects");
 const APP_SCREEN_EXT = /\.(png|jpe?g|webp)$/i;
 
 async function readMdxFile(filePath: string) {
@@ -245,6 +249,127 @@ export async function listAppsFromFiles(): Promise<MobileApp[]> {
     if (app) apps.push(app);
   }
   return apps.sort((a, b) => {
+    const ao = a.sortOrder ?? 9999;
+    const bo = b.sortOrder ?? 9999;
+    if (ao !== bo) return ao - bo;
+    return a.title.localeCompare(b.title);
+  });
+}
+
+export async function listProjectSlugsFromFiles(): Promise<string[]> {
+  try {
+    const entries = await fs.readdir(PROJECTS_DIR, { withFileTypes: true });
+    const slugs: string[] = [];
+    for (const entry of entries) {
+      if (entry.isFile() && (entry.name.endsWith(".mdx") || entry.name.endsWith(".md"))) {
+        slugs.push(entry.name.replace(/\.mdx?$/, ""));
+        continue;
+      }
+      if (!entry.isDirectory()) continue;
+      const dir = path.join(PROJECTS_DIR, entry.name);
+      const candidates = ["index.mdx", "index.md", "app.mdx", "app.md"];
+      for (const fileName of candidates) {
+        try {
+          await fs.access(path.join(dir, fileName));
+          slugs.push(entry.name);
+          break;
+        } catch {
+          // ignore missing candidate
+        }
+      }
+    }
+    return slugs;
+  } catch {
+    return [];
+  }
+}
+
+async function resolveProjectFilePath(slug: string): Promise<string | null> {
+  const rootBase = path.join(PROJECTS_DIR, slug);
+  const rootCandidates = [`${rootBase}.mdx`, `${rootBase}.md`];
+  for (const candidate of rootCandidates) {
+    try {
+      await fs.access(candidate);
+      return candidate;
+    } catch {
+      // try next path
+    }
+  }
+
+  const dir = path.join(PROJECTS_DIR, slug);
+  const dirCandidates = ["index.mdx", "index.md", "app.mdx", "app.md"];
+  for (const fileName of dirCandidates) {
+    const candidate = path.join(dir, fileName);
+    try {
+      await fs.access(candidate);
+      return candidate;
+    } catch {
+      // try next path
+    }
+  }
+  return null;
+}
+
+async function collectProjectMedia(slug: string) {
+  const dir = path.join(PROJECTS_DIR, slug);
+  const media = { iconSrc: undefined as string | undefined, galleryImages: [] as string[] };
+  try {
+    await fs.access(dir);
+  } catch {
+    return media;
+  }
+
+  const iconCandidates = ["icon/512.png", "icon.png", "icon/1024.png"];
+  for (const relPath of iconCandidates) {
+    try {
+      await fs.access(path.join(dir, relPath));
+      media.iconSrc = `/project-assets/${slug}/${relPath}`;
+      break;
+    } catch {
+      // try next icon candidate
+    }
+  }
+
+  try {
+    const files = await fs.readdir(dir, { withFileTypes: true });
+    media.galleryImages = files
+      .filter((entry) => entry.isFile() && APP_SCREEN_EXT.test(entry.name))
+      .map((entry) => `/project-assets/${slug}/${entry.name}`)
+      .sort((a, b) => a.localeCompare(b));
+  } catch {
+    media.galleryImages = [];
+  }
+
+  return media;
+}
+
+export async function getProjectFromFiles(slug: string): Promise<Project | null> {
+  const filePath = await resolveProjectFilePath(slug);
+  if (!filePath) return null;
+
+  const { data, content } = await readMdxFile(filePath);
+  const fm = projectFrontmatterSchema.safeParse(data);
+  if (!fm.success) return null;
+  if (fm.data.slug !== slug) return null;
+  const media = await collectProjectMedia(slug);
+
+  const parsed = projectSchema.safeParse({
+    ...fm.data,
+    bodyMdx: content.trim(),
+    iconSrc: media.iconSrc,
+    galleryImages: media.galleryImages,
+  });
+  return parsed.success ? parsed.data : null;
+}
+
+export async function listProjectsFromFiles(): Promise<Project[]> {
+  const slugs = await listProjectSlugsFromFiles();
+  const projects: Project[] = [];
+  for (const s of slugs) {
+    const project = await getProjectFromFiles(s);
+    if (project) projects.push(project);
+  }
+  return projects.sort((a, b) => {
     const ao = a.sortOrder ?? 9999;
     const bo = b.sortOrder ?? 9999;
     if (ao !== bo) return ao - bo;

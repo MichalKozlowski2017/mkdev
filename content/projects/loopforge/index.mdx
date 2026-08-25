@@ -1,0 +1,33 @@
+---
+slug: loopforge
+title: Loopforge
+tagline: Cycling route generator for Poland — road, gravel, MTB, and general loops.
+platform: web
+status: live
+sortOrder: 1
+year: 2026
+liveUrl: https://loopforge-web.vercel.app
+repoUrl: https://github.com/MichalKozlowski2017/loopforge
+tech:
+  - Next.js 16
+  - MapLibre
+  - Supabase
+  - pgRouting
+  - Tailwind CSS
+  - pnpm
+---
+
+Loopforge generates cycling routes tailored to a chosen surface and riding style —
+road, gravel, MTB, or a general loop — starting from any point in Poland.
+
+## Highlights
+
+- **Routing engine** built on **pgRouting** running on Supabase, using imported
+  OpenStreetMap data.
+- **Interactive map** rendered with MapLibre for fast, vector-based exploration.
+- **Monorepo** managed with pnpm workspaces, deployed on Vercel.
+
+## Stack notes
+
+The routing graph is derived from OSM extracts and served through pgRouting, with an
+optional BRouter fallback for local development.

@@ -1,0 +1,32 @@
+---
+slug: stacker
+title: Stacker
+tagline: Focus stacking for macro photography — drop bracketed frames, get one sharp image.
+platform: desktop
+status: live
+sortOrder: 2
+year: 2026
+repoUrl: https://github.com/MichalKozlowski2017/Stacker
+tech:
+  - Tauri 2
+  - Rust
+  - Svelte 5
+  - macOS
+---
+
+Stacker is a native macOS app that merges a set of focus-bracketed frames into a
+single, fully sharp photograph — no Photoshop required.
+
+## Features
+
+- **RAW support** — reads Canon CR2/CR3, Nikon NEF, Sony ARW and common RAW formats
+  alongside JPEG/PNG/TIFF.
+- **Fast previews** — extracts embedded JPEG previews so even 50 MB RAW files load
+  instantly.
+- **Auto-alignment** — optional phase-correlation FFT alignment corrects small shifts
+  between frames.
+- **Smart blending** — per-pixel Laplacian sharpness maps select the sharpest content
+  from each frame, with a safe fallback in dark or uniform areas.
+- **Flexible export** — save as PNG (lossless), JPEG (adjustable quality), or TIFF.
+
+Built with Tauri 2, a Rust image-processing core, and a Svelte 5 UI.
