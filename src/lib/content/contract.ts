@@ -91,6 +91,8 @@ export const projectFrontmatterSchema = z.object({
 
 export const projectSchema = projectFrontmatterSchema.extend({
   bodyMdx: z.string(),
+  iconSrc: z.string().optional(),
+  galleryImages: z.array(z.string()).default([]),
 });
 
 export type ProjectPlatform = z.infer<typeof projectPlatformSchema>;

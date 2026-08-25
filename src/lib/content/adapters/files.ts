@@ -258,37 +258,106 @@ export async function listAppsFromFiles(): Promise<MobileApp[]> {
 
 export async function listProjectSlugsFromFiles(): Promise<string[]> {
   try {
-    const entries = await fs.readdir(PROJECTS_DIR);
-    return entries
-      .filter((f) => f.endsWith(".mdx") || f.endsWith(".md"))
-      .map((f) => f.replace(/\.mdx?$/, ""));
+    const entries = await fs.readdir(PROJECTS_DIR, { withFileTypes: true });
+    const slugs: string[] = [];
+    for (const entry of entries) {
+      if (entry.isFile() && (entry.name.endsWith(".mdx") || entry.name.endsWith(".md"))) {
+        slugs.push(entry.name.replace(/\.mdx?$/, ""));
+        continue;
+      }
+      if (!entry.isDirectory()) continue;
+      const dir = path.join(PROJECTS_DIR, entry.name);
+      const candidates = ["index.mdx", "index.md", "app.mdx", "app.md"];
+      for (const fileName of candidates) {
+        try {
+          await fs.access(path.join(dir, fileName));
+          slugs.push(entry.name);
+          break;
+        } catch {
+          // ignore missing candidate
+        }
+      }
+    }
+    return slugs;
   } catch {
     return [];
   }
 }
 
-export async function getProjectFromFiles(slug: string): Promise<Project | null> {
-  const base = path.join(PROJECTS_DIR, slug);
-  let filePath = `${base}.mdx`;
-  try {
-    await fs.access(filePath);
-  } catch {
-    filePath = `${base}.md`;
+async function resolveProjectFilePath(slug: string): Promise<string | null> {
+  const rootBase = path.join(PROJECTS_DIR, slug);
+  const rootCandidates = [`${rootBase}.mdx`, `${rootBase}.md`];
+  for (const candidate of rootCandidates) {
     try {
-      await fs.access(filePath);
+      await fs.access(candidate);
+      return candidate;
     } catch {
-      return null;
+      // try next path
     }
   }
+
+  const dir = path.join(PROJECTS_DIR, slug);
+  const dirCandidates = ["index.mdx", "index.md", "app.mdx", "app.md"];
+  for (const fileName of dirCandidates) {
+    const candidate = path.join(dir, fileName);
+    try {
+      await fs.access(candidate);
+      return candidate;
+    } catch {
+      // try next path
+    }
+  }
+  return null;
+}
+
+async function collectProjectMedia(slug: string) {
+  const dir = path.join(PROJECTS_DIR, slug);
+  const media = { iconSrc: undefined as string | undefined, galleryImages: [] as string[] };
+  try {
+    await fs.access(dir);
+  } catch {
+    return media;
+  }
+
+  const iconCandidates = ["icon/512.png", "icon.png", "icon/1024.png"];
+  for (const relPath of iconCandidates) {
+    try {
+      await fs.access(path.join(dir, relPath));
+      media.iconSrc = `/project-assets/${slug}/${relPath}`;
+      break;
+    } catch {
+      // try next icon candidate
+    }
+  }
+
+  try {
+    const files = await fs.readdir(dir, { withFileTypes: true });
+    media.galleryImages = files
+      .filter((entry) => entry.isFile() && APP_SCREEN_EXT.test(entry.name))
+      .map((entry) => `/project-assets/${slug}/${entry.name}`)
+      .sort((a, b) => a.localeCompare(b));
+  } catch {
+    media.galleryImages = [];
+  }
+
+  return media;
+}
+
+export async function getProjectFromFiles(slug: string): Promise<Project | null> {
+  const filePath = await resolveProjectFilePath(slug);
+  if (!filePath) return null;
 
   const { data, content } = await readMdxFile(filePath);
   const fm = projectFrontmatterSchema.safeParse(data);
   if (!fm.success) return null;
   if (fm.data.slug !== slug) return null;
+  const media = await collectProjectMedia(slug);
 
   const parsed = projectSchema.safeParse({
     ...fm.data,
     bodyMdx: content.trim(),
+    iconSrc: media.iconSrc,
+    galleryImages: media.galleryImages,
   });
   return parsed.success ? parsed.data : null;
 }

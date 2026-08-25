@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import {
@@ -10,6 +11,7 @@ import {
 import { mdxComponents } from "@/components/mdx/mdx-components";
 import {
   PlatformBadge,
+  ProjectIcon,
   ProjectLinks,
   StatusBadge,
   TechTags,
@@ -64,11 +66,14 @@ export default async function ProjectDetailPage({ params }: Props) {
               </span>
             ) : null}
           </div>
-          <h1 className="text-pretty text-4xl font-semibold tracking-tight sm:text-5xl sm:leading-[1.08]">
-            <span className="bg-gradient-to-r from-zinc-900 to-zinc-600 bg-clip-text text-transparent dark:from-white dark:to-zinc-300">
-              {project.title}
-            </span>
-          </h1>
+          <div className="flex items-center gap-4">
+            <ProjectIcon title={project.title} iconSrc={project.iconSrc} size={56} />
+            <h1 className="text-pretty text-4xl font-semibold tracking-tight sm:text-5xl sm:leading-[1.08]">
+              <span className="bg-gradient-to-r from-zinc-900 to-zinc-600 bg-clip-text text-transparent dark:from-white dark:to-zinc-300">
+                {project.title}
+              </span>
+            </h1>
+          </div>
           {project.tagline ? (
             <p className="max-w-3xl text-lg leading-relaxed text-zinc-600 dark:text-zinc-400">
               {project.tagline}
@@ -78,6 +83,33 @@ export default async function ProjectDetailPage({ params }: Props) {
           <ProjectLinks liveUrl={project.liveUrl} repoUrl={project.repoUrl} />
         </div>
       </header>
+
+      {project.galleryImages.length > 0 ? (
+        <section className="space-y-4">
+          <h2 className="text-xl font-semibold tracking-tight text-zinc-900 dark:text-zinc-100">
+            Screenshots
+          </h2>
+          <div className="grid gap-4">
+            {project.galleryImages.map((src, index) => (
+              <a
+                key={src}
+                href={src}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="group block overflow-hidden rounded-2xl border border-zinc-200/90 bg-white/70 shadow-sm transition hover:border-violet-400/45 hover:shadow-md dark:border-zinc-800 dark:bg-zinc-950/55"
+              >
+                <Image
+                  src={src}
+                  alt={`${project.title} screenshot ${index + 1}`}
+                  width={1600}
+                  height={1000}
+                  className="h-full w-full object-cover transition duration-300 group-hover:scale-[1.01]"
+                />
+              </a>
+            ))}
+          </div>
+        </section>
+      ) : null}
 
       {project.bodyMdx ? (
         <div className="prose-layout">
