@@ -10,15 +10,7 @@ Uniwersalny szablon **Next.js (App Router) + TypeScript + Tailwind** do klonowan
 | `supabase` | Tabele `cms_pages`, `cms_posts` | `docs/supabase-schema.sql` + własny panel (`/admin` — placeholder) |
 | `sanity` | Zapytania GROQ | `docs/sanity-studio.md` |
 
-Skopiuj [`.env.example`](.env.example) do `.env.local` i ustaw tryb (oraz opcjonalnie zmienne AI Studio / ComfyUI).
-
-## AI Studio (`/studio`)
-
-Lokalny panel sterowania **ComfyUI** (obraz, galeria, modele, wideo). Nie przechodzi przez adaptery CMS.
-
-- Setup: [`docs/studio-setup.md`](docs/studio-setup.md)
-- ENV: `COMFYUI_URL`, `COMFYUI_MODELS_DIR`, `COMFYUI_OUTPUT_DIR`, opcjonalnie `STUDIO_PASSWORD`
-- API: `/api/studio/*` (health, generate, jobs, gallery, models)
+Skopiuj [`.env.example`](.env.example) do `.env.local` i ustaw tryb.
 
 ## Skrypty
 
