@@ -62,6 +62,8 @@ export const mobileAppFrontmatterSchema = z.object({
   appStoreUrl: z.string().url().optional(),
   /** `slug` strony z `content/pages` (np. `privacy-moja-apka` → `/privacy-moja-apka`). */
   privacyPolicySlug: z.string().optional(),
+  /** Publiczne podsumowanie statystyk aplikacji (JSON) → strona `/apps/{slug}/stats`. */
+  statsUrl: z.string().url().optional(),
 });
 
 export const mobileAppSchema = mobileAppFrontmatterSchema.extend({

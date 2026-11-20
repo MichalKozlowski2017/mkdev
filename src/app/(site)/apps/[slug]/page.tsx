@@ -85,6 +85,16 @@ export default async function AppDetailPage({ params }: Props) {
               </Link>
             </p>
           ) : null}
+          {app.statsUrl ? (
+            <p className="text-sm text-zinc-600 dark:text-zinc-400">
+              <Link
+                href={`/apps/${app.slug}/stats`}
+                className="font-semibold text-violet-600 underline decoration-violet-500/30 underline-offset-4 transition hover:decoration-violet-500/60 dark:text-violet-400"
+              >
+                Live stats: behind the scenes
+              </Link>
+            </p>
+          ) : null}
         </div>
       </header>
 
