@@ -64,6 +64,8 @@ export const mobileAppFrontmatterSchema = z.object({
   privacyPolicySlug: z.string().optional(),
   /** Publiczne podsumowanie statystyk aplikacji (JSON) → strona `/apps/{slug}/stats`. */
   statsUrl: z.string().url().optional(),
+  /** Zrzuty poziome (np. gra na tablet): galeria w poziomych ramkach. Domyślnie pionowe. */
+  galleryOrientation: z.enum(["portrait", "landscape"]).optional(),
 });
 
 export const mobileAppSchema = mobileAppFrontmatterSchema.extend({
@@ -89,6 +91,8 @@ export const projectFrontmatterSchema = z.object({
   liveUrl: z.string().url().optional(),
   repoUrl: z.string().url().optional(),
   tech: z.array(z.string()).default([]),
+  /** Zrzuty poziome w projekcie mobilnym (np. gra na tablet): galeria w poziomych ramkach. */
+  galleryOrientation: z.enum(["portrait", "landscape"]).optional(),
 });
 
 export const projectSchema = projectFrontmatterSchema.extend({

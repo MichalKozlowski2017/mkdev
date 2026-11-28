@@ -108,7 +108,13 @@ export default async function AppDetailPage({ params }: Props) {
           <h2 className="text-xl font-semibold tracking-tight text-zinc-900 dark:text-zinc-100">
             Screenshots
           </h2>
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <div
+            className={
+              app.galleryOrientation === "landscape"
+                ? "grid gap-4 sm:grid-cols-2"
+                : "grid gap-4 sm:grid-cols-2 lg:grid-cols-3"
+            }
+          >
             {app.galleryImages.map((src, index) => (
               <a
                 key={src}
@@ -120,8 +126,8 @@ export default async function AppDetailPage({ params }: Props) {
                 <Image
                   src={src}
                   alt={`${app.title} screenshot ${index + 1}`}
-                  width={900}
-                  height={1950}
+                  width={app.galleryOrientation === "landscape" ? 1280 : 900}
+                  height={app.galleryOrientation === "landscape" ? 720 : 1950}
                   className="h-full w-full object-cover transition duration-300 group-hover:scale-[1.02]"
                 />
               </a>

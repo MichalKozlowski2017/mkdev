@@ -41,6 +41,9 @@ export default async function ProjectDetailPage({ params }: Props) {
   if (!project) notFound();
 
   const isMobile = project.platform === "mobile";
+  // Portrait phone screenshots in tall frames; landscape ones (tablet games) in wide frames.
+  const tallShots = isMobile && project.galleryOrientation !== "landscape";
+  const wideMobileShots = isMobile && !tallShots;
 
   return (
     <article className="space-y-12">
@@ -93,9 +96,11 @@ export default async function ProjectDetailPage({ params }: Props) {
           </h2>
           <div
             className={
-              isMobile
+              tallShots
                 ? "grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4"
-                : "grid gap-4"
+                : wideMobileShots
+                  ? "grid gap-4 sm:grid-cols-2"
+                  : "grid gap-4"
             }
           >
             {project.galleryImages.map((src, index) => (
@@ -105,7 +110,7 @@ export default async function ProjectDetailPage({ params }: Props) {
                 target="_blank"
                 rel="noopener noreferrer"
                 className={`group relative block overflow-hidden rounded-2xl border border-zinc-200/90 bg-zinc-50 shadow-sm transition hover:border-violet-400/45 hover:shadow-md dark:border-zinc-800 dark:bg-zinc-900 ${
-                  isMobile ? "aspect-[9/19]" : "aspect-[16/10]"
+                  tallShots ? "aspect-[9/19]" : wideMobileShots ? "aspect-video" : "aspect-[16/10]"
                 }`}
               >
                 <Image
@@ -113,7 +118,7 @@ export default async function ProjectDetailPage({ params }: Props) {
                   alt={`${project.title} screenshot ${index + 1}`}
                   fill
                   sizes={
-                    isMobile
+                    tallShots
                       ? "(min-width: 1024px) 25vw, (min-width: 640px) 33vw, 50vw"
                       : "(min-width: 768px) 720px, 100vw"
                   }
